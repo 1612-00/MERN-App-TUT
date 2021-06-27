@@ -74,7 +74,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-
   // Register
   const registerUser = async (userForm) => {
     try {
@@ -93,8 +92,21 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // Logout
+  const logout = () => {
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+    dispatch({
+      // Gán lại các biến trong reduce như ban đầu
+      type: "SET_AUTH",
+      payload: {
+        isAuthenticated: false,
+        user: null,
+      },
+    });
+  };
+
   // context data
-  const authContextData = { loginUser, registerUser, authState };
+  const authContextData = { loginUser, registerUser, logout, authState };
 
   // return provider
   return (

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Spinner from "react-bootstrap/Spinner";
+import NavBarMenu from './../components/layout/NavbarMenu';
 
 // Bọc bên ngoài các route nội dung như dashboard, about,...
 const ProtectedRoute = ({ component: Component, ...rest }) => {
@@ -23,6 +24,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       render={(props) =>
         isAuthenticated ? (
           <>
+            <NavBarMenu />
             <Component {...rest} {...props} />
           </>
         ) : (
