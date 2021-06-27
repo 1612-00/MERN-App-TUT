@@ -28,8 +28,9 @@ const AuthContextProvider = ({ children }) => {
     try {
       // Gửi req đến server lấy về thông tin người dùng có auth token trên
       const response = await axios.get(`${apiUrl}/auth`);
-      
-      if (response.data.success) {       // Nếu lấy thành công, set các giá trị trong reduce
+
+      if (response.data.success) {
+        // Nếu lấy thành công, set các giá trị trong reduce
         dispatch({
           type: "SET_AUTH",
           // Đã xác thực đăng nhập và gán thông tin user
@@ -65,6 +66,7 @@ const AuthContextProvider = ({ children }) => {
           response.data.accessToken
         );
 
+      loadUser();
       return response.data;
     } catch (error) {
       if (error.response.data) return error.response.data;
