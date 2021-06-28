@@ -1,4 +1,10 @@
-import { ADD_POST, POSTS_LOADED_SUCCESS } from "../contexts/constants";
+import {
+  ADD_POST,
+  DELETE_POST,
+  FIND_POST,
+  POSTS_LOADED_SUCCESS,
+  UPDATE_POST,
+} from "../contexts/constants";
 import { POSTS_LOADED_FAIL } from "../contexts/constants";
 
 export const postReducer = (state, action) => {
@@ -18,11 +24,32 @@ export const postReducer = (state, action) => {
         posts: [],
         postsLoading: false,
       };
-      
+
     case ADD_POST:
       return {
         ...state,
-        posts: [...state.posts, payload]
+        posts: [...state.posts, payload],
+      };
+
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== payload),
+      };
+
+    case UPDATE_POST:
+      const newPosts = state.posts.map((post) =>
+        post._id === payload._id ? payload : post
+      );
+      return {
+        ...state,
+        posts: newPosts,
+      };
+
+    case FIND_POST:
+      return {
+        ...state,
+        choosedPost: payload
       }
 
     default:

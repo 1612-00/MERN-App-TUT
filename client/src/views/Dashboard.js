@@ -14,6 +14,7 @@ import { AuthContext } from "./../contexts/AuthContext";
 import SinglePost from "./../components/posts/SinglePost";
 import AddPostModal from "../components/posts/AddPostModal";
 import addIcon from "../assets/plus-circle-fill.svg";
+import UpdatePostModal from '../components/posts/UpdatePostModal'
 
 const Dashboard = () => {
   // Context
@@ -24,7 +25,7 @@ const Dashboard = () => {
   } = useContext(AuthContext);
 
   const {
-    postsState: { posts, postsLoading },
+    postsState: { choosedPost, posts, postsLoading },
     getPosts,
     setShowAddPostModal,
     showToast: { show, message, type },
@@ -89,6 +90,7 @@ const Dashboard = () => {
     <>
       {body}
       <AddPostModal />
+      { choosedPost !== null && <UpdatePostModal />}
       <Toast
         show={show}
         style={{ position: "fixed", top: "20%", right: "10px" }}
