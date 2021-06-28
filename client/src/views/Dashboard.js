@@ -8,6 +8,7 @@ import {
   Button,
   OverlayTrigger,
   Tooltip,
+  Toast,
 } from "react-bootstrap";
 import { AuthContext } from "./../contexts/AuthContext";
 import SinglePost from "./../components/posts/SinglePost";
@@ -26,6 +27,8 @@ const Dashboard = () => {
     postsState: { posts, postsLoading },
     getPosts,
     setShowAddPostModal,
+    showToast: { show, message, type },
+    setShowToast,
   } = useContext(PostContext);
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Dashboard = () => {
             <Card.Text>
               Click the button below to track your first skill to learn
             </Card.Text>
-            <Button variant="primary">LearnIt!</Button>
+            <Button variant="primary" onClick={setShowAddPostModal.bind(this, true)}>LearnIt!</Button>
           </Card.Body>
         </Card>
       </>
@@ -86,6 +89,22 @@ const Dashboard = () => {
     <>
       {body}
       <AddPostModal />
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          message: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide  
+      >
+        <Toast.Body>
+          <strong>{message}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };
