@@ -1,11 +1,14 @@
 import axios from "axios";
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import { postReducer } from "../reducers/postReducer";
 import { apiUrl, POSTS_LOADED_FAIL, POSTS_LOADED_SUCCESS } from "./constants";
 
 export const PostContext = createContext();
 
 const PostContextProvider = ({ children }) => {
+  // State
+  const [showAddPostModal, setShowAddPostModal] = useState(false);
+
   // Reducer
   const [postsState, dispatch] = useReducer(postReducer, {
     posts: [],
@@ -24,7 +27,12 @@ const PostContextProvider = ({ children }) => {
     }
   };
 
-  const postContextData = { postsState, getPosts };
+  const postContextData = {
+    postsState,
+    getPosts,
+    showAddPostModal,
+    setShowAddPostModal,
+  };
 
   return (
     <PostContext.Provider value={postContextData}>

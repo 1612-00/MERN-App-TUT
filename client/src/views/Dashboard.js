@@ -1,12 +1,18 @@
 import { useContext, useEffect } from "react";
 import { PostContext } from "../contexts/PostContext";
-import { Spinner } from "react-bootstrap";
+import {
+  Spinner,
+  Card,
+  Col,
+  Row,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import { AuthContext } from "./../contexts/AuthContext";
-import { Card } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import SinglePost from './../components/posts/SinglePost';
+import SinglePost from "./../components/posts/SinglePost";
+import AddPostModal from "../components/posts/AddPostModal";
+import addIcon from "../assets/plus-circle-fill.svg";
 
 const Dashboard = () => {
   // Context
@@ -19,6 +25,7 @@ const Dashboard = () => {
   const {
     postsState: { posts, postsLoading },
     getPosts,
+    setShowAddPostModal,
   } = useContext(PostContext);
 
   useEffect(() => {
@@ -58,11 +65,29 @@ const Dashboard = () => {
             </Col>
           ))}
         </Row>
+
+        {/* Open add post modal */}
+        <OverlayTrigger
+          placement="left"
+          overlay={<Tooltip>Add a new think to lear </Tooltip>}
+        >
+          <Button
+            className="btn-floating"
+            onClick={setShowAddPostModal.bind(this, true)}
+          >
+            <img src={addIcon} alt="addIcon" width="50" height="50" />
+          </Button>
+        </OverlayTrigger>
       </>
     );
   }
 
-  return <>{body}</>;
+  return (
+    <>
+      {body}
+      <AddPostModal />
+    </>
+  );
 };
 
 export default Dashboard;
